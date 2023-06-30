@@ -1,0 +1,33 @@
+<p>rooms works!</p>
+
+<!-- interpolation -->
+
+<h1>welcome to {{hotelname}}</h1>
+
+
+<!-- this is event binding -->
+<div [hidden]="hiderooms" >
+
+
+    <!-- this is property binding -->
+
+    Number of rooms:
+    <div [innerText]="number" [ngStyle]="{'color':  'green' }"></div>
+</div>
+
+<button (click)="toggle()">hide</button>
+
+<div *ngIf="rooms.roomsAvail >0" ngClass="blue">
+    
+roomsAvail
+</div>
+  
+<!-- accessing array and dispalay it  -->
+<div *ngFor="let rooms of roomsList" ngClass="red">
+<td>  {{rooms.price | currency :'INR'}}</td>
+<td>  {{rooms.roomtype | uppercase }}</td>
+
+<!-- in the below linke | uppercase is example of using bulit in pipes there are manu built in pipes explore it by yourself -->
+<td>  {{rooms.amenities | uppercase  }}</td>
+</div>
+
