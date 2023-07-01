@@ -1,0 +1,16 @@
+<h2>{{title}}</h2>
+<!-- accessing array and dispalay it  -->
+<div *ngFor="let rooms of rooms" ngClass="red , table">
+    <td>  {{rooms.price | currency :'INR'}}</td>
+    <td>  {{rooms.roomtype | uppercase }}</td>
+    
+    <!-- in the below linke | uppercase is example of using bulit in pipes there are manu built in pipes explore it by yourself -->
+    <td>  {{rooms.amenities | uppercase  }}</td>
+
+    <td>
+        <button class="btn btn-primary" (click)="selectRoom(rooms)">Select
+
+        </button>
+    </td>
+    </div>
+    

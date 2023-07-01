@@ -20,14 +20,16 @@
 <div *ngIf="rooms.roomsAvail >0" ngClass="blue">
     
 roomsAvail
-</div>
-  
-<!-- accessing array and dispalay it  -->
-<div *ngFor="let rooms of roomsList" ngClass="red">
-<td>  {{rooms.price | currency :'INR'}}</td>
-<td>  {{rooms.roomtype | uppercase }}</td>
 
-<!-- in the below linke | uppercase is example of using bulit in pipes there are manu built in pipes explore it by yourself -->
-<td>  {{rooms.amenities | uppercase  }}</td>
+
+<app-rooms-list [rooms]="roomsList" [title]="title" (selectedRoom)="selectRoom($event)"></app-rooms-list>
+
+
+</div>
+
+
+<div >
+    <button (click)="addRoom()">add rooms</button>
+
 </div>
 

@@ -22,7 +22,7 @@ export class Rooms {
 export interface RoomsList {
 
     roomtype: string;
-    amenities: string;
+    amenities?: string;
     price: number;
 
 }
