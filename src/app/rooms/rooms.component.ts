@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Rooms, RoomsList } from './rooms';;
+import { Component, OnInit  } from '@angular/core';
+import { Rooms, RoomsList } from './rooms';import { RoomsService } from './services/rooms.service';
+;
 
 @Component({
   selector: 'app-rooms',
@@ -29,31 +30,32 @@ export class RoomsComponent implements OnInit {
   };
 
   roomsList: RoomsList[] = [];
+  constructor (private roomsService : RoomsService){}
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.roomsList = [{
+    // this.roomsList = [{
 
-      roomtype: 'delux',
+    //   roomtype: 'delux',
 
-      //i have commented amenities to show that it is optional so we can ignore this value but if i do  comment to price variable it will show me the error
+    //   //i have commented amenities to show that it is optional so we can ignore this value but if i do  comment to price variable it will show me the error
 
-      amenities: 'ac , free wifi , tv',
-      price: 398,
+    //   amenities: 'ac , free wifi , tv',
+    //   price: 398,
 
-    }
-      ,
-    {
-      roomtype: 'pc',
+    // }
+    //   ,
+    // {
+    //   roomtype: 'pc',
 
-      //i have commented amenities to show that it is optional so we can ignore this value but if i do  comment to price variable it will show me the error
+    //   //i have commented amenities to show that it is optional so we can ignore this value but if i do  comment to price variable it will show me the error
 
-      amenities: 'ac , free wifi , tv',
-      price: 39852,
-    }]
+    //   amenities: 'ac , free wifi , tv',
+    //   price: 39852,
+    // }]
 
-
+    this.roomsList = this.roomsService.getRooms();
 
   }
 
@@ -61,7 +63,7 @@ export class RoomsComponent implements OnInit {
     const room: RoomsList = {
       roomtype: 'delux',
 
-      //writing a fucntion to add room then we can see how to detect the changes 
+      //writing a fucntion to add room then we can se  how to detect the changes 
 
 
       amenities: 'ac , free wifi , tv',
