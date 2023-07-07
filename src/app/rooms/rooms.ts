@@ -13,7 +13,7 @@ export class Rooms {
 
     constructor(roomsAvail:number , totalRooms:number , bookedRooms:number)
     {
-        this.bookedRooms= bookedRooms
+        this.bookedRooms= bookedRooms 
         this.roomsAvail= roomsAvail
         this.totalRooms = totalRooms
     }

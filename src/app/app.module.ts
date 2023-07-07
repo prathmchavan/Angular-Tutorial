@@ -8,6 +8,7 @@ import { RoomsListComponent } from './rooms/rooms-list/rooms-list.component';
 import { HeaderComponent } from './header/header.component';
 import { ContainerComponent } from './container/container.component';
 import { EmployeeComponent } from './employee/employee.component';
+import { app_config, app_service_config } from 'src/AppConfig/appconfig.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,12 @@ import { EmployeeComponent } from './employee/employee.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    {
+    provide : app_service_config,
+    useValue : app_config ,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
