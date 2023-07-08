@@ -55,9 +55,16 @@ export class RoomsComponent implements OnInit {
     //   price: 39852,
     // }]
 
-    this.roomsList = this.roomsService.getRooms();
+    this.roomsService.getRooms().subscribe((rooms: RoomsList[]) => {
+      this.roomsList = rooms;
+    });
+    // this won't work because the data i have made is in different format from the tutorial one
 
   }
+
+    // Type 'Observable<Object>' is missing the following properties from type 'RoomsList[]': length, pop, push, concat, and 28 more.
+
+  
 
   addRoom() {
     const room: RoomsList = {
@@ -77,5 +84,5 @@ export class RoomsComponent implements OnInit {
     this.hiderooms = !this.hiderooms;
   }
   title =' this is pc '
-}
 
+} 

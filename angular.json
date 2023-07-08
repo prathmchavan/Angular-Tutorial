@@ -70,7 +70,8 @@
               "browserTarget": "Angular-Tutorial:build:production"
             },
             "development": {
-              "browserTarget": "Angular-Tutorial:build:development"
+              "browserTarget": "Angular-Tutorial:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
