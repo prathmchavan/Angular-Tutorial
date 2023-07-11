@@ -42,6 +42,11 @@ export class RoomsComponent implements OnInit {
     observer.next('user2')
     observer.next('user3')
     observer.complete()
+
+    //rxjs works on push based architecture ( getdata -> continuous stream of data - > add datat ( in this rxjs will automatically serve the updated data
+    
+// RxJS is a library for composing asynchronous and event-based programs by using observable sequences. It provides one core type, the Observable, satellite types (Observer, Schedulers, Subjects) and operators inspired by Array methods (map, filter, reduce, every, etc) to allow handling asynchronous events as collections.
+
   })
 
   
