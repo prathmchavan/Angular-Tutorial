@@ -1,5 +1,6 @@
 import { Component, OnInit  } from '@angular/core';
 import { Rooms, RoomsList } from './rooms';import { RoomsService } from './services/rooms.service';
+import { Observable, lastValueFrom } from 'rxjs';
 ;
 
 @Component({
@@ -32,6 +33,19 @@ export class RoomsComponent implements OnInit {
   roomsList: RoomsList[] = [];
   constructor (private roomsService : RoomsService){}
 
+
+  // Observables are lazy Push collections of multiple values
+  stream = new  Observable (observer =>{
+    // What is an Observer? An Observer is a consumer of values delivered by an Observable. Observers are simply a set of callbacks, one for each type of notification delivered by the Observable: next, error, and complete. The following is an example of a typical Observer object:
+
+    observer.next('user1')
+    observer.next('user2')
+    observer.next('user3')
+    observer.complete()
+  })
+
+  
+
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -58,7 +72,22 @@ export class RoomsComponent implements OnInit {
     this.roomsService.getRooms().subscribe((rooms: RoomsList[]) => {
       this.roomsList = rooms;
     });
+
+
     // this won't work because the data i have made is in different format from the tutorial one
+
+
+    this.stream.subscribe({
+      next:(value) => console.log(value),
+      complete : () => console.log('complete'),
+      error:(err) => console.log(err)
+    })
+
+// NEW VALUE IS PUSHED YOUR OBSERVER WILL SEE IT AND CALL NEXT METHOD WHOEVER SUBSCRIBE TO IT WILL GET THE VALUE  
+
+
+
+
 
   }
 
