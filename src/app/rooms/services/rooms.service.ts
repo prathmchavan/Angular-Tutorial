@@ -47,6 +47,24 @@ export class RoomsService  {
       return this.http.get<RoomsList[]>('/api/rooms');
       //we don't have to give the hole path because we are setuped the proxy config file which will redirect it 
     }
+
+    addRooms(room:RoomsList)
+    {
+      return this.http.post('/api/rooms',room)
+    }
+    editRoom(room:RoomsList)
+    {
+      return this.http.post('/api/rooms',room)
+    }
+    
+    delete (id:string)
+    {
+      return this.http.delete<RoomsList[]>(`/api/room/${id}`)    }
+
+    // deleteRooms(room:RoomsList)
+    // {
+    //   return this.http.post('/api/rooms)
+    // }
 }
 // rxjs works on push based architecture ( getdata -> continuous stream of data - > add datat ( in this rxjs will automatically serve the updated data
 
