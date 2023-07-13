@@ -1,12 +1,12 @@
-
 <!-- interpolation -->
 <app-header></app-header>
 
 <h1>welcome to {{hotelname}}</h1>
 
-
+<!-- async pipe will unwrap the data and show it json format -->
+<!-- {{rooms$ |async| json}}  -->
 <!-- this is event binding -->
-<div [hidden]="hiderooms" >
+<div [hidden]="hiderooms">
 
 
     <!-- this is property binding -->
@@ -17,27 +17,34 @@
 
 <button (click)="toggle()">hide</button>
 
-<div *ngIf="rooms.roomsAvail >0" ngClass="blue">
-    
-roomsAvail
+ <h1>{{getError$ | async}}</h1>
+<div *ngIf=" rooms$ | async as rooms" ngClass="blue">
+
+    roomsAvail
 
 
-<app-rooms-list [rooms]="roomsList" [title]="title" (selectedRoom)="selectRoom($event)"></app-rooms-list>
+    <app-rooms-list [rooms]="rooms " [title]="title" (selectedRoom)="selectRoom($event)"></app-rooms-list>
 
 
 </div>
 
 
-<div >
+<div>
     <button (click)="addRoom()">add rooms</button>
 
 </div>
-<div >
+<div>
     <button (click)="editRoom()"> edit rooms</button>
 
 </div>
 
-<div >
+<div>
     <button (click)="deleteRoom()"> delete rooms</button>
 
 </div>
+
+<div>
+    <h2> {{totalBytes}} used</h2>
+</div>
+
+

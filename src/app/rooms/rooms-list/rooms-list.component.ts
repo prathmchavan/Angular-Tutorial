@@ -10,7 +10,7 @@ import { RoomsList } from '../rooms';
 })
 export class RoomsListComponent implements  OnChanges {
 
-  @Input() rooms : RoomsList[]=[]
+  @Input() rooms : RoomsList[] | null=[]
   //@input decorator use for importing the data from parent component and render in this child component
 
   @Input () title : string =''
