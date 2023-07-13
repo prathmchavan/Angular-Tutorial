@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Rooms, RoomsList } from './rooms'; import { RoomsService } from './services/rooms.service';
-import { Observable, lastValueFrom } from 'rxjs';
+import { Observable, Subject, Subscription, catchError, lastValueFrom, of, shareReplay } from 'rxjs';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 ;
 
 @Component({
@@ -14,7 +15,8 @@ export class RoomsComponent implements OnInit {
 
   number = 10;
 
-  hiderooms = false;
+  hiderooms = true;
+  http: any;
 
 
   selectRoom(room: RoomsList) {
@@ -31,6 +33,20 @@ export class RoomsComponent implements OnInit {
   };
 
   roomsList: RoomsList[] = [];
+
+
+
+  //RxJS is mostly useful for its operators, even though the Observable is the foundation. Operators are the essential pieces that allow complex asynchronous code to be easily composed in a declarative manner.
+
+
+
+
+
+
+
+
+
+
 
   constructor(private roomsService: RoomsService) { }
 
@@ -50,9 +66,60 @@ export class RoomsComponent implements OnInit {
 
   })
 
+  totalBytes = 0;
+
+
+  subscription!: Subscription
+  //subject is base class
+  error$ = new Subject<string>()
+
+
+
+  // for error handling don't do this in component file do the error handling in service file  because change detection will run because we are subscribing to it
+
+  getError$ = this.error$.asObservable();
+
+
+  rooms$ = this.roomsService.getRooms$.pipe(
+    catchError((err) => {
+      // console.log(err)
+      this.error$.next(err.messages)
+      return of([])
+    })
+  )
 
 
   ngOnInit(): void {
+
+
+
+    //http request example
+    //so this was not response it was a event so i treated this event which has property (event property)
+    this.roomsService.getphotos().subscribe((event) => {
+      switch (event.type) {
+        case HttpEventType.Sent: {
+          console.log('request has been made')
+          break;
+        }
+        case HttpEventType.ResponseHeader: {
+          console.log('request success')
+          break;
+
+        }
+        case HttpEventType.DownloadProgress: {
+          this.totalBytes += event.loaded;
+          break;
+
+        }
+        case HttpEventType.Response: {
+          console.log(event.body)
+        }
+      }
+    })
+
+
+
+
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     // this.roomsList = [{
@@ -75,9 +142,13 @@ export class RoomsComponent implements OnInit {
     //   price: 39852,
     // }]
 
-    this.roomsService.getRooms().subscribe((rooms: RoomsList[]) => {
-      this.roomsList = rooms;
-    });
+    // this.subscription = this.roomsService.getRooms$.subscribe((rooms: RoomsList[]) => {
+    //   this.roomsList = rooms; 
+
+
+    //we have used the async pipe to unwrape the data and show it in json formate  while in above line we are doing that manually subscribing to the stream but async will handle it from us
+
+
     //you have to run the backedn api for this CRUD operation to be execute 
 
 
@@ -115,32 +186,30 @@ export class RoomsComponent implements OnInit {
 
 
     this.roomsService.addRooms(room).subscribe((data) => {
-        this.roomsList = data as RoomsList[];
+      this.roomsList = data as RoomsList[];
     })
-    
+
 
   }
-  
-  editRoom(){
+
+  editRoom() {
     //this operation perform the update operation 
     const room: RoomsList = {
       roomtype: 'delux',
 
       amenities: 'ac , free wifi , tv',
       price: 398,
-   
+
     }
 
 
     this.roomsService.editRoom(room).subscribe((data) => {
-        this.roomsList = data as RoomsList[];
+      this.roomsList = data as RoomsList[];
     })
   }
 
-  deleteRoom()
-  {//this operation performs the delete operation 
-    this.roomsService.delete('3').subscribe((data)=>
-    {
+  deleteRoom() {//this operation performs the delete operation 
+    this.roomsService.delete('3').subscribe((data) => {
       // this.roomsService.delete('3')
 
       //this won't because i have't included the id in my html component so it won't see the roomlist with the id 3 as it is set in the backed
@@ -152,5 +221,11 @@ export class RoomsComponent implements OnInit {
 
   }
   title = ' this is pc '
-
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if (this.subscription) {
+      this.subscription.unsubscribe;
+    }
+  }
 } 
