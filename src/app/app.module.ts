@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'; // Add this import
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'; // Add this import
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,6 +10,7 @@ import { HeaderComponent } from './header/header.component';
 import { ContainerComponent } from './container/container.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { app_config, app_service_config } from 'src/AppConfig/appconfig.service';
+import { RequestInterceptor } from './request.interceptor';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,11 @@ import { app_config, app_service_config } from 'src/AppConfig/appconfig.service'
     {
     provide : app_service_config,
     useValue : app_config ,
+    },
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass: RequestInterceptor,
+      multi:true
     }
   ],
   bootstrap: [AppComponent]

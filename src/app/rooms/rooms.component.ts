@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Rooms, RoomsList } from './rooms'; import { RoomsService } from './services/rooms.service';
-import { Observable, Subject, Subscription, catchError, lastValueFrom, of, shareReplay } from 'rxjs';
+import { Observable, Subject, Subscription, catchError, lastValueFrom, map, of, shareReplay } from 'rxjs';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 ;
 
@@ -68,6 +68,7 @@ export class RoomsComponent implements OnInit {
 
   totalBytes = 0;
 
+  error: string = ''
 
   subscription!: Subscription
   //subject is base class
@@ -86,6 +87,10 @@ export class RoomsComponent implements OnInit {
       this.error$.next(err.messages)
       return of([])
     })
+  )
+
+  roomsCount$ = this.roomsService.getRooms$.pipe(
+    map((rooms) => rooms.length)
   )
 
 

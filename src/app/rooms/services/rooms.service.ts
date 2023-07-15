@@ -1,14 +1,14 @@
 import { Injectable, Inject } from '@angular/core';
 import { RoomsList } from '../rooms';
 import { app_service_config } from '../../../AppConfig/appconfig.service';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { shareReplay } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class RoomsService {
 
-
+ headers = new HttpHeaders({token :'d334223424  '})
 
   //Add 'implements OnInit' to the class.
   // commenting this roomlist because now we are going to fetch the data from the backedn server api using the http client module
@@ -35,8 +35,9 @@ export class RoomsService {
     // }
   ]
 //but the dollar says that this is stream
+//we have made the header which contains the token so when we make a http get request we can se our token in request headers
   getRooms$ = this.http.get<RoomsList[]>('/api/rooms').pipe(
-    shareReplay(1)
+    shareReplay(1) //Sharing user authentication state across multiple components in an application to avoid unnecessary API calls and ensure consistent user experience.
     //when the multiple call are made uneccessarily even though the data never changes we can use sharereplya then it will be cashed and the call will be madhe only the limit u setted
   )
 // use $ this symbol to denot the stream by which u do't have to call it inside the ngonit
