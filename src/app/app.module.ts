@@ -11,7 +11,13 @@ import { ContainerComponent } from './container/container.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { app_config, app_service_config } from 'src/AppConfig/appconfig.service';
 import { RequestInterceptor } from './request.interceptor';
+import { InitService } from './init.service';
 
+
+function initFactory(initService:InitService)
+{
+  return()=>initService.init();
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +42,11 @@ import { RequestInterceptor } from './request.interceptor';
     {
       provide : HTTP_INTERCEPTORS,
       useClass: RequestInterceptor,
+      multi:true
+    },
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:RequestInterceptor,
       multi:true
     }
   ],
