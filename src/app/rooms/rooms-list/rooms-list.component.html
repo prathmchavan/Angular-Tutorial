@@ -1,6 +1,7 @@
 <!-- <h2>{{title}}</h2> -->
 <!-- accessing array and dispalay it  -->
 <div *ngFor="let rooms of rooms" ngClass="red , table">
+    <!-- <td>{{rooms.roomNumber}}</td> -->
     <td>  {{rooms.price | currency :'INR'}}</td>
     <td>  {{rooms.roomtype | uppercase }}</td>
     
